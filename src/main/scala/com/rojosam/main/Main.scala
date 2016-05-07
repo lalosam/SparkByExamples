@@ -1,22 +1,34 @@
 package com.rojosam.main
 
-import com.rojosam.drivers.{Example1, Example2, Example3, Example4}
+import com.rojosam.examples.{Filter, Acronyms, StatisticsByLetter}
+import org.apache.spark.{SparkConf, SparkContext}
 
 
 object Main {
   def main(args: Array[String]): Unit = {
     println(s"Arguments: ${args.mkString(", ")}")
     val example = args(0).toInt
+    val input = args(1)
+    val output = if(args.length > 2) {
+      Some(args(2))
+    }else{
+      None
+    }
+    val conf = new SparkConf().setAppName("SparkByExample")
+    val sc = new SparkContext(conf)
+    val letters = sc.parallelize('a' to 'z')
+    val dictionary = sc.textFile(input)
     example match {
       case 1 =>
-        Example1.execute(args)
+        Filter.execute(dictionary)
       case 2 =>
-        Example2.execute(args)
+        //Example2.execute(sc, args)
       case 3 =>
-        Example3.execute(args)
+        StatisticsByLetter.execute(dictionary)
       case 4 =>
-        Example4.execute(args)
+        Acronyms.execute(dictionary)
     }
+    if(!sc.isStopped) sc.stop()
   }
 
 }

@@ -10,12 +10,11 @@ mainClass in Compile := Some("rojosam.ExampleApp")
 
 libraryDependencies ++=  Seq(
   "org.apache.spark" %% "spark-core" % "1.6.1" % "provided",
-  "org.apache.hadoop" % "hadoop-client" % "2.7.2" % "provided",
   "org.apache.spark" %% "spark-sql" % "1.6.1" % "provided",
   "com.datastax.spark" %% "spark-cassandra-connector" % "1.5.0",
   //"com.datastax.spark" %% "spark-cassandra-connector-java" % "1.5.0",
-  "org.scalactic" %% "scalactic" % "2.2.6",
-  "org.scalatest" %% "scalatest" % "2.2.6" % "test"
+  "com.holdenkarau" %% "spark-testing-base" % "1.6.1_0.3.3"
+
 )
 
 assemblyShadeRules in assembly := Seq(
@@ -28,3 +27,6 @@ assemblyMergeStrategy in assembly := {
   case PathList("META-INF", "MANIFEST.MF") => MergeStrategy.discard
   case _ => MergeStrategy.first
 }
+
+
+coverageEnabled := true
