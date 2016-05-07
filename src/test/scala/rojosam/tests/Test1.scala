@@ -1,6 +1,7 @@
 package rojosam.tests
 
 import com.rojosam.examples.{Acronyms, Filter, StatisticsByLetter}
+import org.scalacheck.Gen
 import rojosam.UnitSpec
 
 import scala.collection.mutable
@@ -45,7 +46,9 @@ class Test1 extends UnitSpec{
   }
 
   "Acronyms" should "return two rows" in {
-    val dictionary = sc.parallelize(Array("dog", "god", "none"))
+    val list = Gen.listOf(Gen.alphaStr).sample
+    val dictionary = sc.parallelize(list.get,2)
+    //val dictionary = sc.parallelize(Array("dog", "god", "none"))
     val output = Acronyms.execute(dictionary).collect()
     output.foreach(t => println(s"${t._1.padTo(10, " ").mkString("")}-> ${t._2} (${t._3})"))
     assert(output.length == 2)
