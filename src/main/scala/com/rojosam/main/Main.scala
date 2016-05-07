@@ -5,6 +5,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 
 
 object Main {
+
   def main(args: Array[String]): Unit = {
     println(s"Arguments: ${args.mkString(", ")}")
     val example = args(0).toInt
