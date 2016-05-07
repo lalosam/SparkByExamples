@@ -46,9 +46,9 @@ class Test1 extends UnitSpec{
   }
 
   "Acronyms" should "return two rows" in {
-    val list = Gen.listOf(Gen.alphaStr).sample
-    val dictionary = sc.parallelize(list.get,2)
-    //val dictionary = sc.parallelize(Array("dog", "god", "none"))
+    //val list = Gen.listOf(Gen.alphaStr).sample
+    //val dictionary = sc.parallelize(list.get,2)
+    val dictionary = sc.parallelize(Array("dog", "god", "none"),2)
     val output = Acronyms.execute(dictionary).collect()
     output.foreach(t => println(s"${t._1.padTo(10, " ").mkString("")}-> ${t._2} (${t._3})"))
     assert(output.length == 2)
