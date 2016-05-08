@@ -8,7 +8,7 @@ import rojosam.UnitSpec
 
 import scala.collection.mutable
 
-
+/* @TODO Remove unused tests  */
 class Test1 extends UnitSpec{
 
   override val conf = new SparkConf().
