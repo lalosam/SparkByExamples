@@ -28,6 +28,6 @@ assemblyMergeStrategy in assembly := {
   case _ => MergeStrategy.first
 }
 
-coverageEnabled.in(Test, test) := true
+//coverageEnabled.in(Test, test) := true
 
 test in assembly := {}
