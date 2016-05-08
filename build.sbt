@@ -30,6 +30,4 @@ assemblyMergeStrategy in assembly := {
 
 coverageEnabled.in(Test, test) := true
 
-coverageReport.in(Test, test) := true
-
 test in assembly := {}
