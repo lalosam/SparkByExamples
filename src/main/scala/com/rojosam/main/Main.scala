@@ -1,6 +1,6 @@
 package com.rojosam.main
 
-import com.rojosam.examples.{Filter, Acronyms, StatisticsByLetter}
+import com.rojosam.examples.{Acronyms, Filter, GenerateStrings, StatisticsByLetter}
 import org.apache.spark.{SparkConf, SparkContext}
 
 
@@ -11,11 +11,12 @@ object Main {
     val example = args(0)
     val input = args(1)
     val output = if(args.length > 2) {
-      Some(args(2))
+      args(2)
     }else{
-      None
+      ""  //default directory
     }
     val conf = new SparkConf().setAppName("SparkByExample")
+      .set("com.roosam.outputdir", output)
     val sc = new SparkContext(conf)
     val letters = sc.parallelize('a' to 'z')
     val dictionary = sc.textFile(input)
@@ -28,6 +29,8 @@ object Main {
         StatisticsByLetter.execute(dictionary)
       case "Acronyms" =>
         Acronyms.execute(dictionary)
+      case "GenerateStrings" =>
+        GenerateStrings.execute(dictionary)
     }
     if(!sc.isStopped) sc.stop()
   }

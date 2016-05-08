@@ -65,9 +65,8 @@ class Test1 extends UnitSpec{
   "GenerateStrings" should "return 10,000 words" in {
     val partitions = 10
     val dictionary = sc.parallelize('a' to 'z', partitions).map(c => c.toString).cache()
-    val outputDir = sc.broadcast("/user/eduardo/sparkbyexamples")
-    val output = GenerateStrings.execute(dictionary)
-    output.saveAsTextFile(s"${outputDir.value}/strings")
+    val count = GenerateStrings.generateStrings(dictionary).count
+    println(count)
   }
 
 }
