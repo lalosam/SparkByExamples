@@ -7,20 +7,21 @@ object GenerateStrings {
   def execute(letters:RDD[String]): Unit = {
     val sc = letters.context
     val outputDir = sc.getConf.get("com.roosam.outputdir", "generatedstrings/outputDefault")
-    generateStrings(letters)
+    val partitions = sc.getConf.getInt("com.roosam.partitions", defaultValue = 10)
+    generateStrings(letters, partitions)
     .saveAsTextFile(s"${outputDir}")
   }
 
-  def generateStrings (letters:RDD[String]): RDD[String] = {
+  def generateStrings (letters:RDD[String], partitions:Int): RDD[String] = {
     val chars = letters.cache()
     printSize("CHARS", chars)
-    val chars2 = chars.cartesian(chars).map(concat)
+    val chars2 = chars.cartesian(chars).map(concat).coalesce(partitions)
     printSize("CHARS2", chars2)
-    val chars3 = chars2.cartesian(chars).map(concat)
+    val chars3 = chars2.cartesian(chars).map(concat).coalesce(partitions)
     printSize("CHARS3", chars3)
-    val chars4 = chars3.cartesian(chars).map(concat)
+    val chars4 = chars3.cartesian(chars).map(concat).coalesce(partitions)
     printSize("CHARS4", chars4)
-    val result = chars.union(chars2).union(chars3).union(chars4)
+    val result = chars.union(chars2).union(chars3).union(chars4).coalesce(partitions)
     printSize("RESULT", result)
     result
   }
