@@ -15,8 +15,14 @@ object Main {
     }else{
       ""  //default directory
     }
+    val partitions:Int = if(args.length > 3) {
+      args(3).toInt
+    }else{
+      10  //default number of partitions
+    }
     val conf = new SparkConf().setAppName("SparkByExample")
-      .set("com.roosam.outputdir", output)
+      .set("com.rojosam.outputdir", output)
+      .set("com.rojosam.partitions", partitions.toString)
     val sc = new SparkContext(conf)
     val letters = sc.parallelize('a' to 'z')
     val dictionary = sc.textFile(input)

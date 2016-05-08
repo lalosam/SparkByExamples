@@ -6,8 +6,8 @@ object GenerateStrings {
 
   def execute(letters:RDD[String]): Unit = {
     val sc = letters.context
-    val outputDir = sc.getConf.get("com.roosam.outputdir", "generatedstrings/outputDefault")
-    val partitions = sc.getConf.getInt("com.roosam.partitions", defaultValue = 10)
+    val outputDir = sc.getConf.get("com.rojosam.outputdir", "generatedstrings/outputDefault")
+    val partitions = sc.getConf.getInt("com.rojosam.partitions", defaultValue = 10)
     generateStrings(letters, partitions)
     .saveAsTextFile(s"${outputDir}")
   }
