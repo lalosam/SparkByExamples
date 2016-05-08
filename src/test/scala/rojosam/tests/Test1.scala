@@ -1,6 +1,8 @@
 package rojosam.tests
 
-import com.rojosam.examples.{Acronyms, Filter, StatisticsByLetter}
+import com.holdenkarau.spark.testing.SharedSparkContext
+import com.rojosam.examples.{Acronyms, Filter, GenerateStrings, StatisticsByLetter}
+import org.apache.spark.SparkConf
 import org.scalacheck.Gen
 import rojosam.UnitSpec
 
@@ -8,6 +10,12 @@ import scala.collection.mutable
 
 
 class Test1 extends UnitSpec{
+
+  override val conf = new SparkConf().
+    setMaster("local[*]").
+    setAppName("test").
+    set("spark.ui.enabled", "true").
+    set("spark.app.id", appID)
 
   "A Stack" should "pop values in last-in-first-out order" in {
     println(1)
@@ -52,6 +60,14 @@ class Test1 extends UnitSpec{
     val output = Acronyms.execute(dictionary).collect()
     output.foreach(t => println(s"${t._1.padTo(10, " ").mkString("")}-> ${t._2} (${t._3})"))
     assert(output.length == 2)
+  }
+
+  "GenerateStrings" should "return 10,000 words" in {
+    val partitions = 10
+    val dictionary = sc.parallelize('a' to 'z', partitions).map(c => c.toString).cache()
+    val outputDir = sc.broadcast("/user/eduardo/sparkbyexamples")
+    val output = GenerateStrings.execute(dictionary)
+    output.saveAsTextFile(s"${outputDir.value}/strings")
   }
 
 }
