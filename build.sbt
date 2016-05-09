@@ -13,8 +13,10 @@ resolvers += "gphat" at "https://raw.github.com/gphat/mvn-repo/master/releases/"
 libraryDependencies ++=  Seq(
   "org.apache.spark"     %% "spark-core"                  % "1.6.1"           % "provided",
   "org.apache.spark"     %% "spark-sql"                   % "1.6.1"           % "provided",
-  //"com.datastax.spark"   %% "spark-cassandra-connector"   % "1.5.0",
-  "com.holdenkarau"      %% "spark-testing-base"          % "1.6.1_0.3.3"
+  "com.holdenkarau"      %% "spark-testing-base"          % "1.6.1_0.3.3",
+  "org.apache.thrift"    %  "libthrift"                   % "0.8.0",
+  "com.twitter"          %% "scrooge-core"                % "4.6.0",
+  "com.twitter"          %% "finagle-thrift"              % "6.34.0"
 )
 
 assemblyShadeRules in assembly := Seq(
