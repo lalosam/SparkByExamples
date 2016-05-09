@@ -1,11 +1,8 @@
 package rojosam.tests
 
-import com.holdenkarau.spark.testing.SharedSparkContext
 import com.rojosam.examples.{Acronyms, Filter, GenerateStrings, StatisticsByLetter}
 import org.apache.spark.SparkConf
-import org.scalacheck.Gen
 import rojosam.UnitSpec
-
 import scala.collection.mutable
 
 /* @TODO Remove unused tests  */

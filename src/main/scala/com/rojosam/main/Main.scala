@@ -21,6 +21,7 @@ object Main {
       10  //default number of partitions
     }
     val conf = new SparkConf().setAppName("SparkByExample")
+      .set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
       .set("com.rojosam.outputdir", output)
       .set("com.rojosam.partitions", partitions.toString)
     val sc = new SparkContext(conf)
