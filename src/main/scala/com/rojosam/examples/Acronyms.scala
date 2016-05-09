@@ -1,8 +1,6 @@
 package com.rojosam.examples
 
-import com.datastax.spark.connector._
 import org.apache.spark.rdd.RDD
-import org.apache.spark.{SparkConf, SparkContext}
 
 object Acronyms {
   def initial(): (String, Int) = ("", 0)
