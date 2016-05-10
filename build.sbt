@@ -27,7 +27,7 @@ assemblyShadeRules in assembly := Seq(
   ShadeRule.rename("com.google.**" -> "shadeio.@1").inAll
 )
 
-assemblyJarName in assembly := s"${name.value}-${version.value}-${buildNumber.padTo(4,"0").mkString("")}.jar"
+assemblyJarName in assembly := s"${name.value}-${version.value}-${"%04d".format(buildNumber.toInt)}.jar"
 
 assemblyMergeStrategy in assembly := {
   case PathList("META-INF", "MANIFEST.MF") => MergeStrategy.discard
