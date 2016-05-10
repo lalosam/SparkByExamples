@@ -1,6 +1,10 @@
+import scala.util.Try
+
 name := "SparkByExamples"
 
 version := "1.0"
+
+val buildNumber = Try(sys.env("BUILD_NUMBER")).getOrElse("0000")
 
 scalaVersion := "2.10.6"
 
@@ -23,7 +27,7 @@ assemblyShadeRules in assembly := Seq(
   ShadeRule.rename("com.google.**" -> "shadeio.@1").inAll
 )
 
-assemblyJarName in assembly := s"${name.value}-${version.value}.jar"
+assemblyJarName in assembly := s"${name.value}-${version.value}-${buildNumber.padTo(4,"0").mkString("")}.jar"
 
 assemblyMergeStrategy in assembly := {
   case PathList("META-INF", "MANIFEST.MF") => MergeStrategy.discard
